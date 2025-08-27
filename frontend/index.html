@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SabPaisa DJB Refund Dashboard</title>
+    <!-- Tab color for modern browsers -->
+    <meta name="theme-color" content="#0a3c7d"> <!-- Blue for Sab -->
+    <meta name="msapplication-TileColor" content="#ff9800"> <!-- Orange for Paisa (Windows) -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#0a3c7d"> <!-- iOS Safari bar -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #e0e7ff 0%, #f8fafc 100%);
+            width: 100vw;
+            overflow-x: hidden;
+        }
+        .container {
+            background: #fff;
+            padding: 1.5em 0.5em 2em 0.5em;
+            border-radius: 18px;
+            box-shadow: 0 4px 32px #0a3c7d22;
+            max-width: 100vw;
+            width: 100vw;
+            min-height: 100vh;
+            margin: 0 auto;
+            transition: box-shadow 0.2s;
+            overflow-x: auto;
+        }
+        .container:hover {
+            box-shadow: 0 12px 48px #0a3c7d44, 0 2px 0 #fff;
+        }
+        .heading-card {
+            background: linear-gradient(90deg, #fff 60%, #eaf6fb 100%);
+            border-radius: 18px;
+            box-shadow: 0 2px 16px #0a3c7d22;
+            padding: 1.2em 1em 1.2em 1em;
+            margin-bottom: 0.5em;
+            position: relative;
+        }
+        .accent-bar {
+            height: 6px;
+            width: 120px;
+            background: linear-gradient(90deg, #ff9800 0%, #3d3dd7 100%);
+            border-radius: 4px;
+            margin: 0 auto 0.7em auto;
+            display: block;
+        }
+        .tagline {
+            text-align: center;
+            color: #555;
+            font-size: 1.08em;
+            margin-bottom: 1.2em;
+            font-weight: 500;
+        }
+        .section {
+            background: #f8f9fa;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px #0a3c7d11;
+            padding: 1.2em 0.7em 1.2em 0.7em;
+            margin-bottom: 1.5em;
+        }
+        .section-title {
+            color: #0a3c7d;
+            font-size: 1.25em;
+            font-weight: 700;
+            margin-bottom: 1em;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+        }
+        .section-title .icon {
+            font-size: 1.2em;
+            vertical-align: middle;
+        }
+        .footer {
+            width: 100vw;
+            background: linear-gradient(90deg, #0a3c7d 60%, #00b386 100%);
+            color: #fff;
+            text-align: center;
+            padding: 1.2em 0 0.5em 0;
+            font-size: 1em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 2em;
+            border-radius: 0 0 18px 18px;
+            box-shadow: 0 -2px 12px #0a3c7d22;
+        }
+        input, button, select {
+            margin: 0.5em 0;
+            padding: 0.7em 1.2em;
+            font-size: 1.05em;
+            border-radius: 8px;
+            border: 1.5px solid #0a3c7d33;
+            font-family: inherit;
+            box-shadow: 0 1px 4px #eaf6fb;
+        }
+        input:focus, select:focus {
+            outline: 2px solid #00b386;
+            border-color: #00b386;
+            background: #eaf6fb;
+        }
+        .search-row, .search-bar-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7em;
+            margin-bottom: 1.5em;
+        }
+        .search-row input, .search-row button, .search-bar-row input, .search-bar-row button {
+            flex: 1 1 200px;
+            min-width: 140px;
+        }
+        button {
+            background: linear-gradient(90deg, #0a3c7d 60%, #00b386 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+            box-shadow: 0 2px 8px #0a3c7d22;
+            padding: 0.7em 1.2em;
+            font-size: 1.05em;
+            min-width: 110px;
+            margin-left: 0.5em;
+            display: inline-block;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #00b386 60%, #0a3c7d 100%);
+            box-shadow: 0 4px 16px #00b38633;
+            transform: scale(1.04);
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 1.5em;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px #0a3c7d11;
+            background: #f8f9fa;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 400px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #0a3c7d11;
+        }
+        th, td {
+            border: 1px solid #e0e6ed;
+            padding: 0.7em 0.5em;
+            white-space: nowrap;
+            font-size: 0.98em;
+        }
+        th {
+            background: #eaf6fb;
+            color: #0a3c7d;
+            font-weight: 700;
+            font-size: 1em;
+            letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+        tr:nth-child(even) td {
+            background: #f8f9fa;
+        }
+        .issues {
+            color: #e74c3c;
+        }
+        #uploadStatus {
+            margin-left: 1em;
+            font-weight: 700;
+            color: #00b386;
+            font-size: 1.1em;
+        }
+        .spinner {
+            display: none;
+            border: 4px solid #eaf6fb;
+            border-top: 4px solid #00b386;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .sticky-header th {
+            position: sticky;
+            top: 0;
+            background: #eaf6fb;
+            z-index: 2;
+        }
+        .highlight-row {
+            background: #fffbe6 !important;
+        }
+        .toast {
+            visibility: hidden;
+            min-width: 220px;
+            background: #0a3c7d;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 1em 1.5em;
+            position: fixed;
+            z-index: 9999;
+            left: 50%;
+            bottom: 40px;
+            font-size: 1.1em;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 12px #0a3c7d33;
+            transition: visibility 0s, opacity 0.3s linear;
+            opacity: 0;
+        }
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.4);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2em 2em 1em 2em;
+            min-width: 300px;
+            max-width: 90vw;
+            box-shadow: 0 4px 32px #0a3c7d33;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 0.7em;
+            right: 1.2em;
+            font-size: 1.5em;
+            color: #0a3c7d;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .modal-content table {
+            width: 100%;
+            margin-top: 1em;
+        }
+        .modal-content th, .modal-content td {
+            padding: 0.5em 0.7em;
+            font-size: 1em;
+        }
+        .modal-content th {
+            background: #eaf6fb;
+        }
+        @media (max-width: 900px) {
+            .container { padding: 1em; max-width: 100vw; }
+            table { min-width: 350px; }
+            h1 { font-size: 1.5em; }
+            h2 { font-size: 1.1em; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 0.5em; max-width: 100vw; }
+            table { min-width: 250px; font-size: 0.9em; }
+            th, td { padding: 0.4em 0.2em; font-size: 0.9em; }
+            .search-row input, .search-row button, .search-bar-row input, .search-bar-row button {
+                min-width: 90px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="heading-card">
+        <span style="display:flex;align-items:center;justify-content:center;gap:1em;">
+            <span style="font-family:'Poppins',Arial,sans-serif;font-size:2.7em;font-weight:800;letter-spacing:1.5px;text-shadow:0 2px 12px #0a3c7d22, 0 1px 0 #fff;">
+                <span style="color:#ff9800;">Sab</span><span style="color:#3d3dd7;">Paisa</span>
+                <span style="color:#0a3c7d;"> DJB Refund Dashboard</span>
+            </span>
+        </span>
+        <span class="accent-bar"></span>
+        <div class="tagline">Automated Refund Dashboard for uploading, searching, validating, and managing DJB refund transactions.</div>
+        <div style="text-align:center;margin-bottom:1.2em;">
+            <span style="display:inline-block;background:#eaf6fb;color:#0a3c7d;font-size:1.08em;font-weight:600;padding:0.5em 1.2em;border-radius:8px;box-shadow:0 2px 8px #0a3c7d11;">
+                <span style="margin-right:1.5em;">Helpline: <a href="tel:+916201791054" style="color:#0a3c7d;text-decoration:none;font-weight:700;">+91 6201791054</a></span>
+                <span>Email: <a href="mailto:sabpaisa@srslive.in" style="color:#0a3c7d;text-decoration:none;font-weight:700;">sabpaisa@srslive.in</a></span>
+            </span>
+        </div>
+    </div>
+    <!-- Total count summary card removed as per user request -->
+        <div class="section">
+            <div class="section-title"><span class="icon">📤</span>1. Upload Excel</div>
+            <label for="excelFile" style="font-weight:600;color:#0a3c7d;">Select Excel File:</label>
+            <input type="file" id="excelFile" accept=".xlsx,.xls" aria-label="Upload Excel File">
+            <button type="button" onclick="uploadExcel()">Upload</button>
+            <div id="uploadStatus"></div>
+            <div class="spinner" id="spinner"></div>
+        </div>
+        <div class="section">
+            <div class="section-title"><span class="icon">🔎</span>2. Search Transactions</div>
+            <div style="margin-bottom: 0.5em; color: #0a3c7d; font-size: 1.08em; font-weight: 600;">
+                <span>Tip: You can search by <b>Transaction ID</b>, <b>clienttransId</b>, or <b>Bidding Firm Name</b>. Leave any field blank if not needed.</span>
+            </div>
+            <hr style="border: none; border-top: 2px solid #eaf6fb; margin: 1em 0 2em 0;">
+            <div style="display: flex; align-items: center; gap: 1em; margin-bottom: 2em; flex-wrap: wrap;">
+                <input type="text" id="searchId" placeholder="Transaction ID" style="flex:1; min-width:180px;" aria-label="Transaction ID">
+                <input type="text" id="searchClientTransId" placeholder="clienttransId" style="flex:1; min-width:180px;" aria-label="clienttransId">
+                <input type="text" id="searchFirm" placeholder="Bidding Firm Name" style="flex:1; min-width:180px;" aria-label="Bidding Firm Name">
+                <button type="button" onclick="searchTransactions()">Search</button>
+                <button type="button" onclick="clearSearchFields()">Clear</button>
+            </div>
+            <div style="margin-bottom: 0.5em;">
+                <button onclick="downloadCSV()" id="downloadBtn" style="display:none;">Download Results (CSV)</button>
+                <button onclick="downloadExcel()" id="downloadExcelBtn" style="display:none; margin-left:0.5em;">Download Results (Excel)</button>
+                <button onclick="downloadPDF()" id="downloadPDFBtn" style="display:none; margin-left:0.5em;">Download Results (PDF)</button>
+                <span id="resultsCount" style="margin-left:1em;font-weight:600;color:#0a3c7d;"></span>
+            </div>
+            <div class="table-container">
+                <div id="searchResults" style="min-height: 60px;"></div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-title"><span class="icon">🧾</span>3. Generate Receipt</div>
+            <div style="display:flex;align-items:center;gap:1em;margin-bottom:1.5em;flex-wrap:wrap;">
+                <input type="text" id="receiptTransId" placeholder="Enter Transaction ID" style="flex:1;min-width:180px;" aria-label="Receipt Transaction ID">
+                <button type="button" onclick="generateReceipt()">Generate Receipt</button>
+            </div>
+            <div id="receiptSection" style="display:none;margin-bottom:2em;"></div>
+        </div>
+        <script>
+        function downloadCSV() {
+            if (!lastResults.length) return;
+            const keys = Object.keys(lastResults[0]);
+            const csvRows = [keys.join(',')];
+            lastResults.forEach(row => {
+                csvRows.push(keys.map(k => '"' + String(row[k]).replace(/"/g, '""') + '"').join(','));
+            });
+            const csvContent = csvRows.join('\r\n');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Refund_Search_Results.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadExcel() {
+            if (!lastResults.length) return;
+            const keys = Object.keys(lastResults[0]);
+            const wsData = [keys];
+            lastResults.forEach(row => {
+                wsData.push(keys.map(k => row[k]));
+            });
+            const wb = window.XLSX.utils.book_new();
+            const ws = window.XLSX.utils.aoa_to_sheet(wsData);
+            window.XLSX.utils.book_append_sheet(wb, ws, 'Results');
+            window.XLSX.writeFile(wb, 'Refund_Search_Results.xlsx');
+        }
+
+        function downloadPDF() {
+        if (!lastResults.length) return;
+        const doc = new window.jspdf.jsPDF({orientation: 'landscape'});
+        // Define required columns and their possible alternate names
+        const requiredKeys = [
+            'S.No', 'Client_Name', 'Amount_to_Pay', 'Refund_Amount', 'clienttransId', 'spTransId', 'transStatus',
+            'transPaymode', 'Division Name', 'NIT_No', 'Item_No', 'Name_of_Bank', 'Branch_Name', 'IFSC_Code',
+            'CBS_Account_No', 'Bidding_Firm_Name', 'refund satus', 'refund date'
+        ];
+        // For each required key, find the actual key in the data (case-insensitive, ignore spaces/underscores)
+        const actualKeys = lastResults.length ? Object.keys(lastResults[0]) : [];
+        function findKey(name) {
+            if (actualKeys.includes(name)) return name;
+            let lower = name.toLowerCase();
+            let found = actualKeys.find(k => k.toLowerCase() === lower);
+            if (found) return found;
+            found = actualKeys.find(k => k.replace(/\s|_/g, '').toLowerCase() === lower.replace(/\s|_/g, ''));
+            if (found) return found;
+            found = actualKeys.find(k => lower.includes(k.toLowerCase()) || k.toLowerCase().includes(lower));
+            if (found) return found;
+            return null;
+        }
+        // Always show all required columns, even if missing in all data rows
+        const keys = requiredKeys;
+        const rows = lastResults.map(row => keys.map(k => {
+            const actual = findKey(k);
+            let value = actual ? row[actual] : '';
+            return (value === undefined || value === null) ? '' : String(value);
+        }));
+        // If no data, still show header row with blanks
+        if (!rows.length) rows.push(keys.map(() => ''));
+        doc.setFontSize(16);
+        doc.text('Refund Search Results', doc.internal.pageSize.getWidth() / 2, 18, {align:'center'});
+        // Calculate column width based on number of columns and page width
+        const pageWidth = doc.internal.pageSize.getWidth() - 20; // 10px margin each side
+        const minColWidth = 40;
+        const colWidth = Math.max(minColWidth, pageWidth / keys.length);
+        doc.autoTable({
+            head: [keys],
+            body: rows,
+            startY: 28,
+            styles: {
+                fontSize: 7,
+                cellPadding: 2,
+                halign: 'left',
+                valign: 'middle',
+                overflow: 'visible',
+            },
+            headStyles: {
+                fillColor: [10, 60, 125],
+                textColor: 255,
+                fontSize: 8,
+                halign: 'center',
+                valign: 'middle',
+                fontStyle: 'bold',
+                cellPadding: 2,
+                overflow: 'visible',
+            },
+            columnStyles: Object.fromEntries(keys.map((k, i) => [i, {cellWidth: colWidth, halign: 'left', valign: 'middle', overflow: 'visible'}])),
+            didDrawCell: function(data) {
+                if (data.section === 'head') {
+                    data.cell.styles.halign = 'center';
+                    data.cell.styles.overflow = 'visible';
+                }
+                if (data.section === 'body') {
+                    data.cell.styles.halign = 'left';
+                    data.cell.styles.overflow = 'visible';
+                }
+            },
+            margin: {left: 10, right: 10},
+            tableWidth: 'auto',
+        });
+        doc.save('Refund_Search_Results.pdf');
+        }
+        </script>
+        <div class="table-container">
+            <div id="searchResults" style="min-height: 60px;"></div>
+        </div>
+
+        <h2>3. Generate Receipt</h2>
+        <div style="display:flex;align-items:center;gap:1em;margin-bottom:1.5em;flex-wrap:wrap;">
+            <input type="text" id="receiptTransId" placeholder="Enter Transaction ID" style="flex:1;min-width:180px;" aria-label="Receipt Transaction ID">
+            <button type="button" onclick="generateReceipt()">Generate Receipt</button>
+        </div>
+        <div id="receiptSection" style="display:none;margin-bottom:2em;"></div>
+    </div>
+    <div id="toast" class="toast"></div>
+    <div id="detailsModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(event)">&times;</span>
+            <h2>Transaction Details</h2>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+    <footer style="text-align:center;padding:1.2em 0 0.5em 0;color:#0a3c7d;font-size:1em;font-weight:600;letter-spacing:0.5px;">
+        &copy; 2025 SabPaisa. All Rights Reserved.
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script>
+// Always use localhost for API during local development
+const API = 'http://localhost:8000';
+
+let lastResults = [];
+
+function showSpinner(show) {
+    document.getElementById('spinner').style.display = show ? 'block' : 'none';
+}
+
+function showToast(msg, success = true) {
+    const toast = document.getElementById('toast');
+    toast.innerText = msg;
+    toast.style.background = success ? '#00b386' : '#e74c3c';
+    toast.className = 'toast show';
+    setTimeout(() => { toast.className = 'toast'; }, 3000);
+}
+
+function uploadExcel() {
+    const fileInput = document.getElementById('excelFile');
+    if (!fileInput.files.length) {
+        showToast('Select a file!', false);
+        return;
+    }
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+    showSpinner(true);
+    fetch(`${API}/upload-excel/`, { method: 'POST', body: formData })
+        .then(async r => {
+            showSpinner(false);
+            if (!r.ok) {
+                let msg = 'Upload failed';
+                try {
+                    const err = await r.json();
+                    msg = err.detail || msg;
+                } catch (err) {
+                    if (r.status === 0 || r.type === 'opaque') {
+                        msg = 'Could not connect to backend. Is the server running?';
+                    }
+                }
+                showToast(msg, false);
+                document.getElementById('uploadStatus').innerHTML = `<span style='color:#e74c3c;font-weight:700;'>${msg}<br><span style='font-size:0.95em;'>Tip: Make sure you are running the backend server and opening this dashboard using VS Code Live Server or a local web server (not file://).</span></span>`;
+                return;
+            }
+            return r.json();
+        })
+        .then(d => {
+            if (d && d.status === 'success') {
+                showToast('Excel uploaded successfully!', true);
+                document.getElementById('uploadStatus').innerText = 'Uploaded';
+            }
+        })
+        .catch(e => {
+            showSpinner(false);
+            let msg = 'Upload failed: ' + (e.message || 'Unknown error');
+            if (e instanceof TypeError && e.message && e.message.includes('Failed to fetch')) {
+                msg = 'Could not connect to backend. Is the server running?';
+            }
+            showToast(msg, false);
+            document.getElementById('uploadStatus').innerHTML = `<span style='color:#e74c3c;font-weight:700;'>${msg}<br><span style='font-size:0.95em;'>Tip: Make sure you are running the backend server and opening this dashboard using VS Code Live Server or a local web server (not file://).</span></span>`;
+        });
+}
+
+function searchTransactions() {
+    // Build params only for non-empty fields
+    const params = new URLSearchParams();
+    const spTransId = document.getElementById('searchId').value.trim();
+    const clienttransId = document.getElementById('searchClientTransId').value.trim();
+    const firm = document.getElementById('searchFirm').value.trim();
+    if (spTransId) params.set('spTransId', spTransId);
+    if (clienttransId) params.set('clienttransId', clienttransId);
+    if (firm) params.set('Bidding_Firm_Name', firm);
+    showSpinner(true);
+    fetch(`${API}/search/?${params}`)
+        .then(r => {
+            if (!r.ok) {
+                throw new Error('Could not connect to backend. Is the server running?');
+            }
+            return r.json();
+        })
+        .then(data => {
+            showSpinner(false);
+            showSearchResults(data);
+            showToast('Search complete!', true);
+        })
+        .catch((e) => {
+            showSpinner(false);
+            let msg = e.message || 'Search failed';
+            showToast(msg, false);
+            document.getElementById('searchResults').innerHTML = `<span style='color:#e74c3c;font-weight:700;'>${msg}<br><span style='font-size:0.95em;'>Tip: Make sure you are running the backend server and opening this dashboard using VS Code Live Server or a local web server (not file://).</span></span>`;
+            document.getElementById('resultsCount').innerText = '';
+            document.getElementById('downloadBtn').style.display = 'none';
+            document.getElementById('downloadExcelBtn').style.display = 'none';
+            document.getElementById('downloadPDFBtn').style.display = 'none';
+        });
+}
+
+let sortKey = null;
+let sortAsc = true;
+
+function showSearchResults(data) {
+    lastResults = data;
+    const countSpan = document.getElementById('resultsCount');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const downloadExcelBtn = document.getElementById('downloadExcelBtn');
+    const downloadPDFBtn = document.getElementById('downloadPDFBtn');
+    if (!data.length) {
+        document.getElementById('searchResults').innerText = 'No results.';
+        countSpan.innerText = '';
+        downloadBtn.style.display = 'none';
+        downloadExcelBtn.style.display = 'none';
+        downloadPDFBtn.style.display = 'none';
+        return;
+    }
+    countSpan.innerText = `Total Results: ${data.length}`;
+    downloadBtn.style.display = 'inline-block';
+    downloadExcelBtn.style.display = 'inline-block';
+    downloadPDFBtn.style.display = 'inline-block';
+    // Column sorting
+    let keys = Object.keys(data[0]);
+    if (sortKey) {
+        data = [...data].sort((a, b) => {
+            let va = a[sortKey] || '';
+            let vb = b[sortKey] || '';
+            if (!isNaN(va) && !isNaN(vb)) { va = +va; vb = +vb; }
+            if (va < vb) return sortAsc ? -1 : 1;
+            if (va > vb) return sortAsc ? 1 : -1;
+            return 0;
+        });
+    }
+    let html = '<table><tr class="sticky-header">' + keys.map(k => `<th onclick="sortTable('${k}')" style="cursor:pointer;">${k} <span style="font-size:0.8em;">&#8597;</span></th>`).join('') + '</tr>';
+    data.forEach((row, idx) => {
+        let highlight = row.issues && row.issues.length ? 'highlight-row' : '';
+        html += `<tr class="${highlight}" tabindex="0">` + keys.map(k => `<td>${row[k]}</td>`).join('') + '</tr>';
+    });
+    html += '</table>';
+    document.getElementById('searchResults').innerHTML = html;
+}
+
+function sortTable(key) {
+    if (sortKey === key) {
+        sortAsc = !sortAsc;
+    } else {
+        sortKey = key;
+        sortAsc = true;
+    }
+    showSearchResults(lastResults);
+}
+
+function showDetails(idx) {
+    const row = lastResults[idx];
+    let html = '<table>';
+    for (const k in row) {
+        html += `<tr><th>${k}</th><td>${row[k]}</td></tr>`;
+    }
+    html += '</table>';
+    document.getElementById('modalBody').innerHTML = html;
+    document.getElementById('detailsModal').style.display = 'flex';
+}
+
+function closeModal(e) {
+    document.getElementById('detailsModal').style.display = 'none';
+}
+
+function clearSearchFields() {
+    document.getElementById('searchId').value = '';
+    document.getElementById('searchClientTransId').value = '';
+    document.getElementById('searchFirm').value = '';
+    document.getElementById('resultsCount').innerText = '';
+    document.getElementById('searchResults').innerText = '';
+    document.getElementById('downloadBtn').style.display = 'none';
+    document.getElementById('downloadExcelBtn').style.display = 'none';
+    document.getElementById('downloadPDFBtn').style.display = 'none';
+}
+
+function generateReceipt() {
+    const transId = document.getElementById('receiptTransId').value.trim();
+    if (!transId) {
+        showToast('Please enter a Transaction ID', false);
+        return;
+    }
+    showSpinner(true);
+    fetch(`${API}/search/?spTransId=${encodeURIComponent(transId)}`)
+        .then(r => {
+            if (!r.ok) {
+                throw new Error('Could not connect to backend. Is the server running?');
+            }
+            return r.json();
+        })
+        .then(data => {
+            showSpinner(false);
+            if (!data.length) {
+                showToast('Transaction not found', false);
+                document.getElementById('receiptSection').style.display = 'none';
+                return;
+            }
+            showReceipt(data[0]);
+        })
+        .catch((e) => {
+            showSpinner(false);
+            let msg = e.message || 'Error generating receipt';
+            showToast(msg, false);
+            document.getElementById('receiptSection').innerHTML = `<span style='color:#e74c3c;font-weight:700;'>${msg}<br><span style='font-size:0.95em;'>Tip: Make sure you are running the backend server and opening this dashboard using VS Code Live Server or a local web server (not file://).</span></span>`;
+            document.getElementById('receiptSection').style.display = 'block';
+        });
+}
+
+function showReceipt(row) {
+    // Build a SabPaisa-branded receipt
+    let html = `<div style="max-width:480px;margin:0 auto;background:#fff;border-radius:14px;box-shadow:0 2px 16px #0a3c7d22;padding:2em 2em 1em 2em;">
+        <div style="text-align:center;margin-bottom:1em;">
+            <img src='https://www.sabpaisa.in/wp-content/uploads/2022/09/SabPaisa-Logo-1.png' alt='SabPaisa Logo' style='max-width:160px;background:#fff;padding:8px 16px;border-radius:10px;box-shadow:0 2px 8px #0a3c7d11;'>
+            <h2 style='color:#0a3c7d;margin:0.5em 0 0.2em 0;font-size:1.3em;'>Payment Receipt</h2>
+        </div>
+        <table style='width:100%;font-size:1em;margin-bottom:1em;'>`;
+    for (const k in row) {
+        html += `<tr><td style='color:#0a3c7d;font-weight:600;padding:0.4em 0.7em;'>${k}</td><td style='padding:0.4em 0.7em;word-break:break-all;'>${row[k]}</td></tr>`;
+    }
+    html += `</table>
+        <div style='text-align:center;margin-top:1em;'>
+            <button id="downloadReceiptBtn" type="button" style='background:#00b386;color:#fff;font-weight:700;padding:0.7em 2em;border:none;border-radius:8px;box-shadow:0 2px 8px #0a3c7d22;cursor:pointer;'>Download PDF</button>
+        </div>
+    </div>`;
+    document.getElementById('receiptSection').innerHTML = html;
+    document.getElementById('receiptSection').style.display = 'block';
+    // Store for PDF
+    window._lastReceiptRow = row;
+    // Always attach event handler to button
+    setTimeout(() => {
+      const btn = document.getElementById('downloadReceiptBtn');
+      if (btn) btn.onclick = downloadReceiptPDF;
+    }, 0);
+}
+
+function downloadReceiptPDF() {
+    const row = window._lastReceiptRow;
+    if (!row) return;
+    const doc = new window.jspdf.jsPDF({orientation: 'p', unit: 'mm', format: 'a4'});
+    // Colored header bar
+    doc.setFillColor(10, 60, 125);
+    doc.rect(0, 0, 210, 28, 'F');
+    // Logo
+    doc.addImage('https://www.sabpaisa.in/wp-content/uploads/2022/09/SabPaisa-Logo-1.png', 'PNG', 12, 6, 32, 14);
+    // Title
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(18);
+    doc.setTextColor(255,255,255);
+    doc.text('SabPaisa Payment Receipt', 105, 18, { align: 'center' });
+    // Receipt info box
+    doc.setDrawColor(10, 60, 125);
+    doc.setLineWidth(0.7);
+    doc.roundedRect(15, 32, 180, 0.01, 2, 2, 'S');
+    // Format keys for better readability
+    function formatKey(key) {
+        return key
+            .replace(/_/g, ' ')
+            .replace(/([a-z])([A-Z])/g, '$1 $2')
+            .replace(/\b([a-z])/g, c => c.toUpperCase())
+            .replace('Qf', 'QF')
+            .replace('Id', 'ID')
+            .replace('No', 'No.')
+            .replace('Ifsc', 'IFSC')
+            .replace('Cbs', 'CBS');
+    }
+    // Prepare key-value pairs for table
+    const entries = Object.entries(row).map(([k, v]) => [formatKey(k), v == null ? '' : String(v)]);
+    // Table layout using jsPDF-AutoTable
+    doc.autoTable({
+        startY: 38,
+        head: [['Field', 'Value']],
+        body: entries,
+        styles: {
+            font: 'helvetica', fontSize: 12, cellPadding: 3, overflow: 'linebreak', valign: 'middle', textColor: [60,60,60], lineColor: [10,60,125], lineWidth: 0.2
+        },
+        headStyles: {
+            fillColor: [255, 152, 0], textColor: 0, fontStyle: 'bold', fontSize: 13, halign: 'center', lineColor: [10,60,125], lineWidth: 0.5
+        },
+        columnStyles: {
+            0: {cellWidth: 60, fontStyle: 'bold', textColor: [10,60,125]},
+            1: {cellWidth: 110}
+        },
+        margin: {left: 22, right: 22},
+        tableWidth: 'auto',
+        theme: 'grid',
+    });
+    // Footer
+    let finalY = doc.lastAutoTable.finalY || 140;
+    doc.setFont('helvetica', 'italic');
+    doc.setFontSize(11);
+    doc.setTextColor(0, 179, 134);
+    doc.text('Thank you for using SabPaisa!', 105, finalY + 14, { align: 'center' });
+    doc.setFontSize(10);
+    doc.setTextColor(120,120,120);
+    doc.text('For support: +91 6201791054 | sabpaisa@srslive.in', 105, finalY + 22, { align: 'center' });
+    doc.save(`SabPaisa_Receipt_${row.spTransId || 'Transaction'}.pdf`);
+}
+
+// Accessibility: allow closing modal with Escape key
+window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.getElementById('detailsModal').style.display = 'none';
+    }
+});
+// Enable Enter key to trigger search in search fields
+window.addEventListener('DOMContentLoaded', function() {
+    ['searchId', 'searchClientTransId', 'searchFirm'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    searchTransactions();
+                }
+            });
+        }
+    });
+});
+
+// --- Advanced UI/UX Enhancements --- //
+
+// Animated background
+const animatedBg = document.createElement('div');
+animatedBg.className = 'animated-bg';
+document.body.prepend(animatedBg);
+
+// Floating Action Button (FAB) for quick scroll to top
+const fab = document.createElement('button');
+fab.className = 'fab';
+fab.title = 'Scroll to Top';
+fab.innerHTML = '<span style="font-size:1.7em;">&#8679;</span>';
+fab.onclick = () => window.scrollTo({top:0,behavior:'smooth'});
+document.body.appendChild(fab);
+
+// Show/hide FAB on scroll
+window.addEventListener('scroll', () => {
+    fab.style.display = window.scrollY > 200 ? 'flex' : 'none';
+});
+fab.style.display = 'none';
+
+// Table row hover highlight (already present, but reinforce for accessibility)
+const style = document.createElement('style');
+style.innerHTML = `
+  .animated-bg {
+    position: fixed; z-index: 0; left: 0; top: 0; width: 100vw; height: 100vh;
+    background: linear-gradient(120deg, #f8fafc 0%, #e0e7ff 50%, #f8fafc 100%);
+    overflow: hidden;
+    animation: bgMove 16s linear infinite alternate;
+  }
+  @keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  .fab {
+    position: fixed; bottom: 2.2em; right: 2.2em; z-index: 1001;
+    background: linear-gradient(135deg, #ff9800 60%, #1976d2 100%);
+    color: #fff; border: none; border-radius: 50%; width: 56px; height: 56px;
+    box-shadow: 0 4px 16px #0a3c7d33; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5em; cursor: pointer; transition: box-shadow 0.2s;
+  }
+  .fab:hover { box-shadow: 0 8px 24px #0a3c7d44; }
+  table tr:hover:not(.sticky-header) { background: #e3f2fd !important; }
+  .toast {
+    z-index: 2000;
+    min-width: 220px;
+    left: 50%; transform: translateX(-50%);
+    font-size: 1.1em;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px #0a3c7d22;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s, bottom 0.3s;
+    bottom: 2.5em;
+  }
+  .toast.show {
+    opacity: 1; pointer-events: auto;
+    bottom: 4.5em;
+  }
+  @media (max-width: 600px) {
+    .fab { right: 1em; bottom: 1em; width: 48px; height: 48px; font-size: 1.2em; }
+    .toast { font-size: 1em; }
+    .mobile-action-bar {
+      display: flex !important;
+    }
+  }
+  /* Mobile sticky action bar */
+  .mobile-action-bar {
+    display: none; position: fixed; bottom: 0; left: 0; width: 100vw; z-index: 1002;
+    background: linear-gradient(90deg, #ff9800 60%, #1976d2 100%);
+    box-shadow: 0 -2px 12px #0a3c7d22;
+    padding: 0.5em 0.7em; justify-content: space-around; align-items: center;
+  }
+  .mobile-action-bar button {
+    background: #fff; color: #1976d2; border: none; border-radius: 8px;
+    font-weight: 700; padding: 0.7em 1.2em; margin: 0 0.3em; font-size: 1em;
+    box-shadow: 0 2px 8px #0a3c7d22; cursor: pointer;
+  }
+`;
+document.head.appendChild(style);
+
+// Custom toast (already present, but improved for accessibility)
+const toast = document.getElementById('toast');
+if (toast) {
+  toast.setAttribute('role', 'status');
+  toast.setAttribute('aria-live', 'polite');
+}
+
+// Mobile sticky action bar (for download/search on mobile)
+const mobileBar = document.createElement('div');
+mobileBar.className = 'mobile-action-bar';
+mobileBar.innerHTML = `
+  <button onclick="searchTransactions()">Search</button>
+  <button id="mobileDownloadBtn" onclick="downloadCSV()">CSV</button>
+  <button id="mobileDownloadExcelBtn" onclick="downloadExcel()">Excel</button>
+  <button id="mobileDownloadPDFBtn" onclick="downloadPDF()">PDF</button>
+`;
+document.body.appendChild(mobileBar);
+
+// Sync mobile bar button visibility with desktop
+function syncMobileBar() {
+  document.getElementById('mobileDownloadBtn').style.display = document.getElementById('downloadBtn').style.display;
+  document.getElementById('mobileDownloadExcelBtn').style.display = document.getElementById('downloadExcelBtn').style.display;
+  document.getElementById('mobileDownloadPDFBtn').style.display = document.getElementById('downloadPDFBtn').style.display;
+}
+setInterval(syncMobileBar, 700);
+
+</script>
+</body>
+</html>
