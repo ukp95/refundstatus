@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    background: #fff;
+}
+.container {
+    background: #fff;
+    padding: 1em 0.5em 1em 0.5em;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 100%;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+    transition: none;
+    overflow-x: auto;
+}
+.container:hover {
+    box-shadow: 0 12px 48px #0a3c7d44, 0 2px 0 #fff;
+}
+header {
+    width: 100vw;
+    background: linear-gradient(90deg, #0a3c7d 60%, #00b386 100%);
+    color: #fff;
+    padding: 1.2em 0 1em 0;
+    text-align: center;
+    font-size: 2em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 12px #0a3c7d22;
+}
+h1 {
+    color: #0a3c7d;
+    font-weight: 700;
+    margin-bottom: 0.7em;
+    letter-spacing: 1px;
+    font-size: 2em;
+    text-shadow: 0 2px 8px #eaf6fb, 0 1px 0 #fff;
+}
+h2 {
+    color: #00b386;
+    font-weight: 700;
+    margin-top: 2em;
+    font-size: 1.2em;
+    letter-spacing: 0.5px;
+}
+.logo-row {
+    display: flex;
+    align-items: center;
+    gap: 2.5em;
+    margin-bottom: 2em;
+    justify-content: center;
+}
+.logo {
+    max-width: 180px;
+    max-height: 70px;
+    display: block;
+    background: #fff;
+    border-radius: 12px;
+    padding: 0.7em 1.2em;
+    box-shadow: 0 2px 12px #0a3c7d11;
+    border: 1px solid #eaf6fb;
+}
+.section {
+    background: #f8f9fa;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px #0a3c7d11;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    margin-bottom: 0.5em;
+}
+.section-title {
+    color: #0a3c7d;
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 1em;
+}
+.footer {
+    width: 100vw;
+    background: #0a3c7d;
+    color: #fff;
+    text-align: center;
+    padding: 1.2em 0 0.5em 0;
+    font-size: 1em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-top: 2em;
+}
+input[type="file"] {
+    border: 1.5px solid #0a3c7d33;
+    border-radius: 8px;
+    background: #f8f9fa;
+    font-family: inherit;
+    font-size: 1em;
+    margin-bottom: 0.5em;
+}
+input, button, select {
+    margin: 0.5em 0;
+    padding: 0.7em 1.2em;
+    font-size: 1.05em;
+    border-radius: 8px;
+    border: 1.5px solid #0a3c7d33;
+    font-family: inherit;
+    box-shadow: 0 1px 4px #eaf6fb;
+}
+input:focus, select:focus {
+    outline: 2px solid #00b386;
+    border-color: #00b386;
+    background: #eaf6fb;
+}
+.search-row, .search-bar-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7em;
+    margin-bottom: 1.5em;
+}
+.search-row input, .search-row button, .search-bar-row input, .search-bar-row button {
+    flex: 1 1 200px;
+    min-width: 140px;
+}
+button {
+    background: linear-gradient(90deg, #0a3c7d 60%, #00b386 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px #0a3c7d22;
+    padding: 0.7em 1.2em;
+    font-size: 1.05em;
+    min-width: 110px;
+    margin-left: 0.5em;
+    display: inline-block;
+}
+button:hover {
+    background: linear-gradient(90deg, #00b386 60%, #0a3c7d 100%);
+    box-shadow: 0 4px 16px #00b38633;
+}
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 1.5em;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px #0a3c7d11;
+    background: #f8f9fa;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 400px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #0a3c7d11;
+}
+th, td {
+    border: 1px solid #e0e6ed;
+    padding: 0.7em 0.5em;
+    white-space: nowrap;
+    font-size: 0.98em;
+}
+th {
+    background: #eaf6fb;
+    color: #0a3c7d;
+    font-weight: 700;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+}
+tr:nth-child(even) td {
+    background: #f8f9fa;
+}
+.issues {
+    color: #e74c3c;
+}
+#uploadStatus {
+    margin-left: 1em;
+    font-weight: 700;
+    color: #00b386;
+    font-size: 1.1em;
+}
+.spinner {
+    display: none;
+    border: 4px solid #eaf6fb;
+    border-top: 4px solid #00b386;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.sticky-header th {
+    position: sticky;
+    top: 0;
+    background: #eaf6fb;
+    z-index: 2;
+}
+.highlight-row {
+    background: #fffbe6 !important;
+}
+.toast {
+    visibility: hidden;
+    min-width: 220px;
+    background: #0a3c7d;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 1em 1.5em;
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    bottom: 40px;
+    font-size: 1.1em;
+    transform: translateX(-50%);
+    box-shadow: 0 2px 12px #0a3c7d33;
+    transition: visibility 0s, opacity 0.3s linear;
+    opacity: 0;
+}
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.4);
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2em 2em 1em 2em;
+    min-width: 300px;
+    max-width: 90vw;
+    box-shadow: 0 4px 32px #0a3c7d33;
+    position: relative;
+}
+.modal-close {
+    position: absolute;
+    top: 0.7em;
+    right: 1.2em;
+    font-size: 1.5em;
+    color: #0a3c7d;
+    cursor: pointer;
+    font-weight: bold;
+}
+.modal-content table {
+    width: 100%;
+    margin-top: 1em;
+}
+.modal-content th, .modal-content td {
+    padding: 0.5em 0.7em;
+    font-size: 1em;
+}
+.modal-content th {
+    background: #eaf6fb;
+}
+@media (max-width: 900px) {
+    .container { padding: 1em; max-width: 100vw; }
+    table { min-width: 350px; }
+    h1 { font-size: 1.5em; }
+    h2 { font-size: 1.1em; }
+}
+@media (max-width: 600px) {
+    .container { padding: 0.5em; max-width: 100vw; }
+    table { min-width: 250px; font-size: 0.9em; }
+    th, td { padding: 0.4em 0.2em; font-size: 0.9em; }
+    .search-row input, .search-row button, .search-bar-row input, .search-bar-row button {
+        min-width: 90px;
+        font-size: 0.9em;
+    }
+}
